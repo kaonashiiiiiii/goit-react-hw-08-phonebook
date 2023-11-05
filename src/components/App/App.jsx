@@ -16,10 +16,6 @@ const App = () => {
       <Suspense fallback={<Spinner />}>
         <Navigation links={['Register', 'Login', 'Contacts']}/>
         <Routes>
-          <Route
-            path="/" 
-            element={<ProtectedRoute isAllowed={false} redirectPath={userToken ? '/contacts' : '/login'} />}
-          />
           <Route path="/register" element={<SignupPage />}/>
           <Route path="/login" element={<LoginPage />} />
           <Route 
@@ -30,6 +26,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<ProtectedRoute isAllowed={false} redirectPath={userToken ? '/contacts' : '/login'} />} />
         </Routes>
       </Suspense>
     </div>
