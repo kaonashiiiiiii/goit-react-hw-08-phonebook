@@ -24,7 +24,6 @@ const SignupForm = () => {
   }, [isSubmitted, user.name, user.email])
 
   function onFinish (values) {
-    setIsSubmitted(false)
     dispatch(signupUser(values))
     setIsSubmitted(true)
   }
