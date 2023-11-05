@@ -2,30 +2,38 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { signupUser } from 'store/slices/userSlice';
-import { getBasicUserInfo, getUserError } from 'store/selectors';
+import { getUserError, getUserLoadingStatus } from 'store/selectors';
 import { MyAlert } from 'components';
 
 // email - уникальный
 // пароль - не меньше 7 символов
 /* mock: {email: tester1tester1tester1@gmail.com, name: tester1, password: rootroot} */
 const SignupForm = () => {
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [userCreationStatus, setUserCreationStatus] = useState('none')
   const [form] = Form.useForm()
   const dispatch = useDispatch()
   const error = useSelector(getUserError)
-  const user = useSelector(getBasicUserInfo)
+  const loading = useSelector(getUserLoadingStatus)
 
   useEffect(() => {
-    const needReset = user.name && user.email && isSubmitted && !error
-    if (needReset) {
+    if (!loading && !error && userCreationStatus === 'loading') {
+      setUserCreationStatus('idle')
+    } else if (!loading && error && userCreationStatus === 'loading') {
+      setUserCreationStatus('error')
+    }
+    //eslint-disable-next-line
+  }, [loading])
+
+  useEffect(() => {
+    if (userCreationStatus === 'idle') {
       resetForm()
     }
-    // eslint-disable-next-line
-  }, [isSubmitted, user.name, user.email])
+    //eslint-disable-next-line
+  }, [userCreationStatus])
 
   function onFinish (values) {
     dispatch(signupUser(values))
-    setIsSubmitted(true)
+    setUserCreationStatus('loading')
   }
 
   function onFinishFailed (errorInfo) {
@@ -33,16 +41,12 @@ const SignupForm = () => {
   }
 
   function resetForm () {
-    const resetedFields = {}
-    const formValues = form.getFieldsValue()
-    Object.keys(formValues).forEach(key => {
-      resetedFields[key] = ''
-    })
-    form.setFieldsValue(resetedFields)
+    form.resetFields()
+    // setUserCreationStatus('none')
   }
 
-  const userCreated = !error && user.name && user.email && isSubmitted
-  const erorrMsg = error && isSubmitted
+  const userCreated = userCreationStatus === 'idle'
+  const erorrMsg = userCreationStatus === 'error'
   return (
     <>
       {erorrMsg && <MyAlert type="error" message="Can't create a new user!!!"/>}

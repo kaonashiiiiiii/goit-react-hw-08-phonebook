@@ -6,6 +6,8 @@ const getUserError = (state) => state.user.user.error
 
 const getBasicUserInfo = (state) => state.user.user
 
+const getUserLoadingStatus = (state) => state.user.user.isLoading
+
 const getFullUserInfo = createSelector(
   state => state.user.user,
   state => state.user.token,
@@ -22,5 +24,6 @@ export {
   getUserToken,
   getUserError,
   getBasicUserInfo,
-  getFullUserInfo
+  getFullUserInfo,
+  getUserLoadingStatus
 }

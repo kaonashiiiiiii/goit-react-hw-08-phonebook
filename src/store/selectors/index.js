@@ -1,4 +1,4 @@
-import { getUserToken, getUserError, getBasicUserInfo, getFullUserInfo } from "./userSelectors";
+import { getUserToken, getUserError, getBasicUserInfo, getFullUserInfo, getUserLoadingStatus } from "./userSelectors";
 import { getContacts, getContactsError, getContactsFilter, getContactsLoadingStatus, getFilteredTableContacts } from "./contactSelectors";
 
 export {
@@ -10,5 +10,6 @@ export {
   getContactsError,
   getContactsFilter,
   getContactsLoadingStatus,
-  getFilteredTableContacts
+  getFilteredTableContacts,
+  getUserLoadingStatus
 }
