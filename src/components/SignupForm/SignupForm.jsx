@@ -24,8 +24,9 @@ const SignupForm = () => {
   }, [isSubmitted, user.name, user.email])
 
   function onFinish (values) {
-    setIsSubmitted(true)
+    setIsSubmitted(false)
     dispatch(signupUser(values))
+    setIsSubmitted(true)
   }
 
   function onFinishFailed (errorInfo) {
@@ -45,7 +46,7 @@ const SignupForm = () => {
   const erorrMsg = error && isSubmitted
   return (
     <>
-      {erorrMsg &&<MyAlert type="error" message="Can't create a new user!!!"/>}
+      {erorrMsg && <MyAlert type="error" message="Can't create a new user!!!"/>}
       {userCreated && <MyAlert type="success" message="New user was created"/>}
       <Form
         form={form}

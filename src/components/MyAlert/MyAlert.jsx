@@ -9,6 +9,7 @@ const ErrorAlert = ({ message, type }) => {
         message={message}
         type={type}
         closable
+        banner
       />
     </div>
   )
