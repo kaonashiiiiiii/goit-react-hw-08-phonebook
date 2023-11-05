@@ -1,0 +1,11 @@
+.logoutMenu {
+  position: fixed;
+  bottom: 1rem;
+  right: 2rem;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
