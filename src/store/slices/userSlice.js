@@ -38,13 +38,13 @@ export const logoutUser = createAsyncThunk(
   }
 )
 
-// export const getCurrentUser = createAsyncThunk(
-//   'users/current',
-//   async (token) => {
-//     const endpoint = `${_apiURL}users/current`
-//     return await request(endpoint, 'GET', null, {'Authorization': token})
-//   }
-// )
+export const getCurrentUser = createAsyncThunk(
+  'users/current',
+  async (token) => {
+    const endpoint = `${_apiURL}users/current`
+    return await request(endpoint, 'GET', null, {'Authorization': token})
+  }
+)
 
 const userSlice = createSlice({
   name: 'user',
@@ -95,19 +95,20 @@ const userSlice = createSlice({
         state.user.isLoading = false
         state.user.error = action.error
       })
-      // .addCase(getCurrentUser.pending, (state) => {
-      //   state.user.isLoading = true
-      // })
-      // .addCase(getCurrentUser.fulfilled, (state, action) => {
-      //   // TODO
-      //   console.log(action.payload)
-      //   state.user.isLoading = false
-      //   state.user.error = null
-      // })
-      // .addCase(getCurrentUser.rejected, (state, action) => {
-      //   state.user.isLoading = false
-      //   state.user.error = action.error
-      // })
+      .addCase(getCurrentUser.pending, (state) => {
+        state.user.isLoading = true
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        const { email, name } = action.payload
+        state.user.email = email
+        state.user.name = name
+        state.user.isLoading = false
+        state.user.error = null
+      })
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.user.isLoading = false
+        state.user.error = action.error
+      })
   }
 })
 
