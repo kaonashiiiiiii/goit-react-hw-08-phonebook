@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Menu } from 'antd'
 import { NavLink, useLocation } from 'react-router-dom'
 import styles from './navigation.module.css'
